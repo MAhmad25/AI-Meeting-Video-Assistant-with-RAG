@@ -7,7 +7,6 @@ A desktop **report generation** app that turns meeting audio and YouTube content
 <img src="https://i.ibb.co/qMzWcdD9/Screenshot-2026-08-06-003022.png" alt="Screenshot 2026 08 06 003022" border="0">
 
 <img src="https://i.ibb.co/BH7Sk3t6/Screenshot-2026-08-06-001127.png" alt="Screenshot 2026 08 06 001127" border="0" width="100%">
-
 ---
 
 ## Features
