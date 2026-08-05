@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+      <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>AI Meeting Assistant</title>
+            <link rel="stylesheet" href="./styles.css" />
+            <link rel="stylesheet" href="./report.css" />
+      </head>
+      <body>
+            <div class="app-shell">
+                  <!-- Title bar -->
+                  <div class="titlebar drag-region">
+                        <div class="titlebar-left">
+                              <span class="app-name">AI Meeting Assistant</span>
+                              <span class="status-pill no-drag">
+                                    <span id="backend-dot" class="status-dot status-dot--starting"></span>
+                                    <span id="backend-label" class="status-text">starting</span>
+                              </span>
+                        </div>
+                        <div id="window-controls" class="titlebar-controls no-drag">
+                              <button id="win-minimize" class="win-btn" title="Minimize">
+                                    <svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="5.5" width="10" height="1" fill="currentColor" /></svg>
+                              </button>
+                              <button id="win-maximize" class="win-btn" title="Maximize">
+                                    <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" /></svg>
+                              </button>
+                              <button id="win-close" class="win-btn win-btn--close" title="Close">
+                                    <svg width="12" height="12" viewBox="0 0 12 12"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.2" /></svg>
+                              </button>
+                        </div>
+                  </div>
+
+                  <div class="body-row">
+                        <!-- Main column -->
+                        <div class="main-column">
+                              <div class="main-header">
+                                    <div id="mode-switcher" class="mode-switcher no-drag">
+                                          <button class="mode-btn mode-btn--active" data-mode="youtube">YouTube Report</button>
+                                          <button class="mode-btn" data-mode="meeting">Meeting Assistant</button>
+                                    </div>
+                                    <button id="new-btn" class="btn btn--ghost hidden">New video</button>
+                              </div>
+
+                              <div class="main-content">
+                                    <div id="backend-notice" class="backend-notice hidden"></div>
+
+                                    <!-- YouTube URL input -->
+                                    <div id="url-card" class="card hidden">
+                                          <div class="card-header">
+                                                <span class="eyebrow">YouTube Report</span>
+                                                <span class="card-title">Paste a video URL</span>
+                                          </div>
+                                          <div class="card-content">
+                                                <div class="ai-input">
+                                                      <textarea id="url-input" rows="1" placeholder="https://www.youtube.com/watch?v=…"></textarea>
+                                                      <button id="url-submit" class="btn btn--signal" disabled>Generate report</button>
+                                                </div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Recording panel -->
+                                    <div id="recording-card" class="card hidden">
+                                          <div class="card-header">
+                                                <span class="eyebrow">Meeting Assistant</span>
+                                                <span class="card-title">Desktop audio recording</span>
+                                          </div>
+                                          <div class="card-content recording-content">
+                                                <div id="recording-source" class="recording-source hidden">
+                                                      <img id="recording-thumb" class="recording-thumb" alt="" />
+                                                      <div class="recording-source-meta">
+                                                            <div id="recording-source-name" class="recording-source-name"></div>
+                                                            <div class="mono-label">System audio · captured automatically</div>
+                                                      </div>
+                                                </div>
+
+                                                <div class="mic-wrap">
+                                                      <button id="mic-btn" class="mic-btn" type="button" title="Start recording">
+                                                            <svg id="mic-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                                                                  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                                                                  <line x1="12" y1="19" x2="12" y2="23" />
+                                                                  <line x1="8" y1="23" x2="16" y2="23" />
+                                                            </svg>
+                                                      </button>
+                                                      <span id="mic-elapsed" class="mic-elapsed">00:00</span>
+                                                      <div id="mic-bars" class="mic-bars"></div>
+                                                      <p id="mic-status" class="mic-status">Click to start recording</p>
+                                                </div>
+
+                                                <div id="discard-wrap" class="hidden" style="display: flex; justify-content: center">
+                                                      <button id="discard-btn" class="btn btn--secondary">Discard recording</button>
+                                                </div>
+
+                                                <p id="recording-error" class="error-text hidden"></p>
+                                          </div>
+                                    </div>
+
+                                    <!-- Saved Reports Viewer -->
+                                    <div id="saved-reports" class="saved-reports hidden">
+                                          <div class="saved-reports-header">
+                                                <span class="eyebrow">Library</span>
+                                                <span class="card-title">Saved reports</span>
+                                          </div>
+                                          <p id="saved-reports-empty" class="saved-reports-empty hidden">No saved reports yet</p>
+                                          <div id="saved-reports-list" class="saved-reports-list" aria-live="polite"></div>
+                                    </div>
+
+                                    <!-- Thinking / pipeline panel -->
+                                    <div id="thinking-card" class="card hidden">
+                                          <div class="card-content">
+                                                <div id="thinking-panel"></div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Report -->
+                                    <div id="report-root" class="report-root"></div>
+                              </div>
+                        </div>
+
+                        <!-- Right rail -->
+                        <div class="right-rail" id="right-rail">
+                              <div class="sidebar-toggle-container">
+                                    <button id="sidebar-toggle" class="sidebar-toggle" title="Toggle sidebar" aria-label="Toggle sidebar">
+                                          <svg class="sidebar-toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                                          </svg>
+                                    </button>
+                              </div>
+                              <div class="sidebar-content-wrapper">
+                                    <div class="orb-block">
+                                          <div id="orb" class="wheel-and-hamster orb--idle" aria-label="Orange and tan hamster running in a metal wheel" role="img">
+                                                <div class="wheel"></div>
+                                                <div class="hamster">
+                                                      <div class="hamster__body">
+                                                            <div class="hamster__head">
+                                                                  <div class="hamster__ear"></div>
+                                                                  <div class="hamster__eye"></div>
+                                                                  <div class="hamster__nose"></div>
+                                                            </div>
+                                                            <div class="hamster__limb hamster__limb--fr"></div>
+                                                            <div class="hamster__limb hamster__limb--fl"></div>
+                                                            <div class="hamster__limb hamster__limb--br"></div>
+                                                            <div class="hamster__limb hamster__limb--bl"></div>
+                                                            <div class="hamster__tail"></div>
+                                                      </div>
+                                                </div>
+                                                <div class="spoke"></div>
+                                          </div>
+                                          <span id="orb-state-label" class="mono-label">idle</span>
+                                    </div>
+
+                                    <div class="chat-block">
+                                          <div id="chat-locked" class="chat-locked">
+                                                <p class="mono-label">Chat unlocks once a report finishes generating.</p>
+                                          </div>
+                                          <div id="chat-panel" class="chat-panel hidden">
+                                                <div class="card-header">
+                                                      <span class="eyebrow">Chat</span>
+                                                      <span id="chat-title" class="card-title"></span>
+                                                </div>
+                                                <div id="chat-messages" class="chat-messages">
+                                                      <p class="mono-label">Ask anything — the transcript is indexed and ready.</p>
+                                                </div>
+                                                <div class="chat-input-row">
+                                                      <div class="ai-input">
+                                                            <textarea id="chat-input" rows="1" placeholder="Ask a question…"></textarea>
+                                                            <button id="chat-submit" class="btn btn--signal" disabled>Send</button>
+                                                      </div>
+                                                      <p id="chat-disabled-hint" class="mono-label hidden">Waiting for the current answer to finish…</p>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+
+            <script src="./report.js"></script>
+            <script src="./app.js"></script>
+      </body>
+</html>

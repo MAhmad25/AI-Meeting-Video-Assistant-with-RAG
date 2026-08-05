@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+      <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Report View — Paper Cards Demo</title>
+            <link rel="stylesheet" href="./styles.css" />
+            <link rel="stylesheet" href="./report.css" />
+            <style>
+                  body {
+                        padding: 24px;
+                        max-width: 1200px;
+                        margin: 0 auto;
+                  }
+            </style>
+      </head>
+      <body>
+            <div id="report-root" class="report-root"></div>
+
+            <script src="./report.js"></script>
+            <script>
+                  const sampleReport = {
+                        title: "Sample YouTube Report",
+                        overview: "A brief overview of the video content on lined paper cards in a masonry layout.",
+                        learning_objectives: ["Understand paper cards", "Use masonry packing", "Drop the glow"],
+                        topics_covered: ["Lined paper", "Margin rule", "Tight columns"],
+                        step_by_step_explanation: ["Load report.js", "Build sections", "Append paper cards"],
+                        tools_mentioned: ["HTML", "CSS", "JavaScript"],
+                        important_concepts: ["Masonry columns", "break-inside: avoid"],
+                        best_practices: ["Keep gap small", "Avoid empty grid cells"],
+                        mistakes_to_avoid: ["Pentogrid waste", "Animated glow borders"],
+                        resources_mentioned: ["Notebook paper motif"],
+                        key_takeaways: ["Cards pack tightly", "No overlapping glow"],
+                        glossary: [
+                              { term: "Masonry", definition: "Column flow that packs cards by height." },
+                              { term: "Paper card", definition: "Lined notebook sheet with a pink margin line." },
+                        ],
+                        quiz_questions: ["What class is the masonry container?", "Where is the margin line?"],
+                        interview_questions: ["How would you add a new section type?"],
+                        final_summary: "Report sections render as lined-paper cards in a compact masonry layout.",
+                  };
+
+                  document.getElementById("report-root").appendChild(
+                        ReportViewer.render(sampleReport, { date: "Aug 05, 2026" }),
+                  );
+            </script>
+      </body>
+</html>

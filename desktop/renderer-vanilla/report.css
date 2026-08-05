@@ -1,0 +1,167 @@
+/* ============================================================
+   Report View — lined-paper cards + masonry layout
+   ============================================================ */
+
+.report-view {
+      width: 100%;
+      padding-bottom: 8px;
+}
+
+/* Masonry via CSS columns — tight packing, no large empty gaps */
+.report-masonry {
+      column-count: 3;
+      column-gap: 12px;
+      width: 100%;
+}
+
+@media (max-width: 1100px) {
+      .report-masonry {
+            column-count: 2;
+      }
+}
+
+@media (max-width: 640px) {
+      .report-masonry {
+            column-count: 1;
+      }
+}
+
+/* Featured title card spans full width above the masonry */
+.report-masonry__featured {
+      width: 100%;
+      margin-bottom: 12px;
+      break-inside: avoid;
+}
+
+/* ---- Lined paper card (from provided container design) ---- */
+.paper-card {
+      display: block;
+      width: 100%;
+      margin: 0 0 12px;
+      padding: 14px 14px 14px 62px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      border-radius: 4px;
+      box-sizing: border-box;
+
+      background: #f1f1f1;
+      background-image: linear-gradient(90deg, transparent 50px, #ffb4b8 50px, #ffb4b8 52px, transparent 52px), linear-gradient(#e1e1e1 0.1em, transparent 0.1em);
+      background-size: 100% 30px;
+      background-attachment: local;
+
+      color: #1a1a1a;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      transition:
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+.paper-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.paper-card--featured {
+      padding-top: 18px;
+      padding-bottom: 18px;
+}
+
+.paper-card__eyebrow {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c45a62;
+      margin-bottom: 4px;
+}
+
+.paper-card__title {
+      margin: 0 0 6px;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: #111;
+}
+
+.paper-card--featured .paper-card__title {
+      font-size: 1.5rem;
+}
+
+.paper-card--glossary .paper-card__title {
+      font-size: 1.2rem;
+      color: #8b3a40;
+}
+
+.paper-card__subtitle,
+.paper-card__body {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: #333;
+}
+
+.paper-card__meta {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 8px;
+}
+
+.paper-card__badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+}
+
+.paper-card__badge {
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 10px;
+      color: #555;
+      background: rgba(255, 255, 255, 0.6);
+}
+
+.paper-card__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+}
+
+.paper-card__list-item {
+      font-size: 1rem;
+      line-height: 1.45;
+      color: #222;
+      padding-left: 12px;
+      position: relative;
+}
+
+.paper-card__list-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #c45a62;
+}
+
+.paper-card__list-meta {
+      display: block;
+      margin-top: 2px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #777;
+}
+
+.paper-card__empty {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #888;
+}

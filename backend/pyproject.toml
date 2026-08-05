@@ -1,0 +1,41 @@
+[project]
+name = "meeting-ai-backend"
+version = "0.1.0"
+description = "Backend for AI Meeting and YouTube Assistant"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    # FastAPI
+    "fastapi>=0.117.0",
+    "uvicorn[standard]>=0.36.0",
+    # Configuration
+    "pydantic>=2.11.0",
+    "pydantic-settings>=2.10.0",
+    "python-dotenv>=1.1.0",
+    # LangChain
+    "langchain>=0.3.27",
+    "langchain-core>=0.3.75",
+    "langchain-openai>=0.3.30",
+    # HTTP
+    "httpx>=0.28.1",
+    # Whisper
+    "faster-whisper>=1.2.0",
+    # YouTube Downloader
+    "yt-dlp",
+    # Audio
+    "ffmpeg-python>=0.2.0",
+    # Utilities
+    "python-multipart>=0.0.20",
+    "rich>=14.1.0",
+    "orjson>=3.11.0",
+    "langchain-text-splitters>=1.1.2",
+    "langchain-groq>=1.1.3",
+    "langchain-ollama>=1.1.0",
+    "langchain-chroma>=1.1.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.0",
+    "basedpyright>=1.31.0",
+]

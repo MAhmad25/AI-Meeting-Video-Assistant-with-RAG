@@ -1,0 +1,79 @@
+{
+      "name": "ai-meeting-assistant-desktop",
+      "version": "0.1.0",
+      "description": "AI Meeting & YouTube Assistant — Electron desktop shell",
+      "main": "dist/main/index.js",
+      "author": "AI Meeting Assistant",
+      "private": true,
+      "scripts": {
+            "dev": "concurrently -k -n TSC,ELECTRON -c blue,magenta \"npm:dev:electron\" \"npm:dev:launch\"",
+            "dev:electron": "tsc -p tsconfig.electron.json --watch --preserveWatchOutput",
+            "dev:launch": "wait-on dist/main/index.js dist/preload/index.js && cross-env NODE_ENV=development electron .",
+            "build": "tsc -p tsconfig.electron.json",
+            "start": "npm run build && cross-env NODE_ENV=production electron .",
+            "package": "npm run build && electron-builder",
+            "package:dir": "npm run build && electron-builder --dir",
+            "typecheck": "tsc -p tsconfig.electron.json --noEmit"
+      },
+      "dependencies": {
+            "electron-log": "^5.1.5",
+            "electron-updater": "^6.2.1"
+      },
+      "devDependencies": {
+            "@types/node": "^20.14.9",
+            "concurrently": "^8.2.2",
+            "cross-env": "^7.0.3",
+            "electron": "^31.1.0",
+            "electron-builder": "^24.13.3",
+            "typescript": "^5.5.3",
+            "wait-on": "^7.2.0"
+      },
+      "build": {
+            "appId": "com.aimeetingassistant.desktop",
+            "productName": "AI Meeting Assistant",
+            "files": [
+                  "dist/**/*",
+                  "renderer-vanilla/**/*"
+            ],
+            "extraResources": [
+                  {
+                        "from": "../backend",
+                        "to": "backend",
+                        "filter": [
+                              "**/*",
+                              "!**/__pycache__/**",
+                              "!.venv/**",
+                              "!storage/chroma_db/**"
+                        ]
+                  }
+            ],
+            "mac": {
+                  "category": "public.app-category.productivity",
+                  "target": [
+                        "dmg"
+                  ]
+            },
+            "win": {
+                  "target": [
+                        "nsis"
+                  ]
+            },
+            "linux": {
+                  "target": [
+                        "AppImage"
+                  ]
+            }
+      },
+      "keywords": [
+            "ai",
+            "meeting",
+            "assistant",
+            "youtube",
+            "assistant",
+            "ai-meeting-assistant",
+            "ai-meeting-assistant-desktop",
+            "ai-meeting-assistant-electron",
+            "ai-meeting-assistant-electron-desktop"
+      ],
+      "license": "ISC"
+}
