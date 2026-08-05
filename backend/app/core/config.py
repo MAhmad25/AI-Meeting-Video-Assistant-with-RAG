@@ -7,7 +7,6 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    groq_api_key: str | None = None
     tokenrouter_api_key: str | None = None
 
     storage_dir: Path = PROJECT_ROOT / "storage"

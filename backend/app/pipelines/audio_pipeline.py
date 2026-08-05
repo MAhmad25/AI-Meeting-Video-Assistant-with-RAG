@@ -2,7 +2,7 @@ from typing import Callable, Optional
 from rich import print
 from app.services.youtube import yt_download_audio
 from app.services.audio_processor import audio_preprocessor
-from app.services.cloud_whisper import generate_transcript
+from app.services.whisper import Whisper_service
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -33,7 +33,7 @@ class GenerateTranscript:
         _emit("compressing_audio_done", "Audio ready for transcription")
 
         _emit("generating_transcript", "Transcribing audio")
-        transcript = generate_transcript(processed_audio_path)
+        transcript = Whisper_service.transcribe(processed_audio_path)
         _emit("generating_transcript_done", "Transcript generated")
 
         return transcript

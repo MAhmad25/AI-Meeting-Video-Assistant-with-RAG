@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Callable, Optional
 from app.services.audio_processor import audio_preprocessor
-from app.services.cloud_whisper import generate_transcript
+from app.services.whisper import Whisper_service
 
 EventEmitter = Callable[[str, str], None]
 
@@ -27,11 +27,12 @@ class GenerateMeetingTranscript:
             raise FileNotFoundError(f"Recording not found: {recording_path}")
 
         _emit("compressing_audio", "Compressing and normalizing recording")
-        processed_audio_path = self.audio_preprocessor.preprocess(recording_path)
+        processed_audio_path = self.audio_preprocessor.preprocess(
+            recording_path)
         _emit("compressing_audio_done", "Audio ready for transcription")
 
         _emit("generating_transcript", "Transcribing audio")
-        transcript = generate_transcript(processed_audio_path)
+        transcript = Whisper_service.transcribe(processed_audio_path)
         _emit("generating_transcript_done", "Transcript generated")
 
         return transcript
