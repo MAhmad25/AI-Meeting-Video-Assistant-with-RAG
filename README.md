@@ -2,11 +2,20 @@
 
 A desktop **report generation** app that turns meeting audio and YouTube content into structured AI reports — powered by a **FastAPI** backend, an **Electron** frontend, and **local LLMs via Ollama**. Everything can run offline: models stay on your machine, and reports are saved locally.
 
+<img src="https://i.ibb.co/qY59st4z/Screenshot-2026-08-06-001037.png" alt="Screenshot 2026 08 06 001037" border="0" width="100%">
+
+<img src="https://i.ibb.co/qMzWcdD9/Screenshot-2026-08-06-003022.png" alt="Screenshot 2026 08 06 003022" border="0">
+
+<img src="https://i.ibb.co/BH7Sk3t6/Screenshot-2026-08-06-001127.png" alt="Screenshot 2026 08 06 001127" border="0" width="100%">
+
+<img src="https://i.ibb.co/svLS3xRf/AI-Meeting-Assistant.png" alt="AI Meeting Assistant" border="0" width="100%">
+
 ---
 
 ## Features
 
 - **LLM-powered report generation** — map/reduce pipelines produce structured reports from transcripts and media
+- **RAG-enabled retrieval** — local embeddings and vector search let the desktop app answer questions from meeting transcripts, YouTube content, and saved reports with retrieval-augmented generation
 - **Local report storage** — generated reports are saved under `backend/storage/reports`
 - **Report viewer UI** — card-based layout in the Electron renderer for browsing and reading reports
 - **FastAPI backend** — REST API for jobs, meetings, YouTube, chat, and reports
