@@ -40,7 +40,8 @@ def _run_youtube_job(
         job.status = JobStatus.RUNNING
         emit("initializing", "Starting YouTube report job")
 
-        transcript = GenerateTranscript_service.generate_transcript(url, emit=emit)
+        transcript = GenerateTranscript_service.generate_transcript(
+            url, emit=emit)
         job.transcript = transcript
 
         report = youtube_report_chain.generate(transcript, emit=emit)
@@ -71,5 +72,6 @@ def _run_youtube_job(
 async def create_youtube_job(payload: YoutubeJobRequest):
     job = job_manager.create(JobType.YOUTUBE, payload.url)
     loop = asyncio.get_running_loop()
-    loop.run_in_executor(None, _run_youtube_job, job.id, payload.url, payload.title, loop)
+    loop.run_in_executor(None, _run_youtube_job, job.id,
+                         payload.url, payload.title, loop)
     return JobCreateResponse(job_id=job.id, status=job.status)
